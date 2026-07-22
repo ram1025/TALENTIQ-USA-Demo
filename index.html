@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TALENTIQ-USA - Login</title>
+<title>TALENTIQ-USA - AI Resume Builder</title>
 <style>
 * {box-sizing: border-box; margin:0; padding:0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;}
 body {background:#f8fafc;}
@@ -22,12 +22,64 @@ body {background:#f8fafc;}
 .login-btn:hover {opacity:0.9;}
 .demo-info {background:#f0fdf4; border:1px solid #16a34a; padding:12px; border-radius:8px; margin-top:15px; font-size:13px; color:#15803d; text-align:center;}
 
-/* REST OF DASHBOARD CSS SAME AS BEFORE */
+/* TOPBAR */
 .topbar {background:white; padding:12px 24px; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:100;}
 .logo {font-size:20px; font-weight:800; background: linear-gradient(90deg, #16a34a, #0B3D91); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
-.container {max-width:900px; margin:30px auto; background:white; padding:35px; border-radius:12px; border:1px solid #e2e8f0;}
-.banner {background: linear-gradient(135deg, #16a34a 0%, #0B3D91 50%, #F97316 100%); padding:20px; border-radius:12px; margin-bottom:20px; color:white;}
+.top-right {display:flex; align-items:center; gap:16px;}
+.notif {position:relative; cursor:pointer; font-size:22px;}
+.notif-badge {position:absolute; top:-4px; right:-4px; background:#ef4444; color:white; font-size:10px; padding:2px 5px; border-radius:10px;}
+.profile {background:#f1f5f9; padding:8px 12px; border-radius:8px; display:flex; align-items:center; gap:8px; font-weight:600; cursor:pointer; position:relative;}
+.avatar {width:32px; height:32px; border-radius:50%; background:linear-gradient(90deg, #16a34a, #0B3D91); color:white; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700;}
+.dropdown {position:absolute; top:45px; right:0; background:white; border:1px solid #e2e8f0; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); width:220px; z-index:10;}
+.dropdown a {display:block; padding:10px 14px; color:#334155; text-decoration:none; font-size:14px;}
+.dropdown a:hover {background:#f1f5f9;}
+.dropdown.user-info {padding:12px; border-bottom:1px solid #e2e8f0;}
+.dropdown.user-info b {display:block;}
+
+/* CONTAINER */
+.container {max-width:900px; margin:30px auto; background:white; padding:35px; border-radius:12px; border:1px solid #e2e8f0; box-shadow:0 4px 10px rgba(0,0,0,0.05);}
+
+/* COLORFUL BANNER */
+.banner {background: linear-gradient(135deg, #16a34a 0%, #0B3D91 50%, #F97316 100%); padding:20px; border-radius:12px; margin-bottom:20px; color:white; position:relative; overflow:hidden;}
+.banner::after {content:"🚀"; position:absolute; right:20px; top:10px; font-size:40px; opacity:0.2;}
+.free-badge {background:rgba(255,255,255,0.2); color:white; padding:6px 12px; border-radius:20px; font-size:12px; font-weight:700; display:inline-block; margin-bottom:10px; border:1px solid rgba(255,255,255,0.3);}
+.banner h2 {color:white; font-size:24px; margin-bottom:5px;}
+.banner p {color:rgba(255,255,255,0.9); font-size:14px;}
+
+/* RESUME SCORE */
+.score-box {background:#f0fdf4; border:1px solid #16a34a; border-radius:10px; padding:20px; margin-bottom:20px;}
+.score-header {display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;}
+.score-title {font-size:16px; font-weight:700; color:#15803d;}
+.score-value {font-size:28px; font-weight:800; color:#16a34a;}
+.progress-bar {background:#e2e8f0; height:10px; border-radius:10px; overflow:hidden; margin-bottom:15px;}
+.progress-fill {background:linear-gradient(90deg, #16a34a, #0B3D91); height:100%; border-radius:10px; transition:width 0.5s;}
+.ai-tip {background:white; border-left:4px solid #F97316; padding:12px; border-radius:6px; margin-bottom:10px; font-size:14px;}
+.ai-tip b {color:#F97316;}
+
+/* STATUS TRACKER */
+.status-box {background:#f0f9ff; border:1px solid #0ea5e9; border-radius:10px; padding:20px; margin-bottom:20px;}
+.status-title {font-size:16px; font-weight:700; color:#0c4a6e; margin-bottom:15px;}
+.status-item {display:flex; align-items:center; gap:12px; margin-bottom:12px; font-size:14px;}
+.status-icon {width:24px; height:24px; border-radius:50%; background:#e2e8f0; display:flex; align-items:center; justify-content:center; font-size:12px;}
+.status-icon.active {background:#16a34a; color:white;}
+.status-text {color:#475569;}
+.status-text b {color:#0f172a;}
+.status-time {font-size:12px; color:#64748b; margin-left:auto;}
+
+/* UPLOAD */
+.upload {border:2px dashed #16a34a; padding:40px; text-align:center; border-radius:8px; margin:20px 0; background:#f0fdf4; cursor:pointer;}
+.upload:hover {background:#dcfce7;}
+.uploaded {background:#dcfce7; border-color:#15803d;}
+input, select {width:100%; padding:12px; margin:8px 0; border:1px solid #cbd5e1; border-radius:6px; font-size:14px;}
+.section-title {color:#0f172a; font-size:16px; font-weight:600; margin-top:20px; margin-bottom:10px; border-bottom:2px solid #e2e8f0; padding-bottom:8px;}
 .btn {background:linear-gradient(90deg, #16a34a, #0B3D91); color:white; padding:14px 28px; border:none; border-radius:6px; font-weight:700; cursor:pointer; font-size:16px; width:100%; margin-top:20px;}
+.btn:hover {opacity:0.9;}
+.note {font-size:12px; color:#64748b; margin-top:5px; text-align:center;}
+.auto-filled {background:#f0fdf4; border-color:#16a34a;}
+.manual {background:#fffbeb; border-color:#f59e0b;}
+#fileName {font-size:13px; color:#16a34a; font-weight:600; margin-top:8px;}
+
+@media(max-width:768px){.container{padding:20px; margin:15px;}.banner h2{font-size:20px;}}
 </style>
 </head>
 <body>
@@ -39,7 +91,7 @@ body {background:#f8fafc;}
     <p class="login-subtitle">AI Resume Builder for US Jobs</p>
 
     <input type="email" id="loginEmail" placeholder="Email" class="login-input" style="padding-right:14px;" value="demo@talentiq.com">
-    
+
     <div class="input-group">
       <input type="password" id="loginPassword" placeholder="Password" class="login-input" value="demo123">
       <button type="button" class="eye-btn" onclick="togglePassword()">👁️</button>
@@ -57,30 +109,132 @@ body {background:#f8fafc;}
 
 <!-- DASHBOARD PAGE -->
 <div id="dashboardPage" class="hidden">
+  <!-- TOPBAR -->
   <div class="topbar">
     <div class="logo">TALENTIQ-USA 🚀</div>
-  </div>
-  <div class="container">
-    <div class="banner">
-      <h2>Welcome to Dashboard</h2>
-      <p>Upload your resume to get started</p>
+    <div class="top-right">
+      <div class="notif" onclick="showNotifications()">🔔<span class="notif-badge">3</span></div>
+      <div class="profile" onclick="toggleDropdown()">
+        <div class="avatar">DM</div> Demo User ▼
+        <div id="profileMenu" class="dropdown hidden">
+          <div class="user-info">
+            <b>Demo User</b>
+            <span style="font-size:12px; color:#64748b;">demo@talentiq.com</span>
+          </div>
+          <a href="#">👤 My Profile</a>
+          <a href="#">⚙️ Account Settings</a>
+          <a href="#" onclick="handleLogout()">🚪 Logout</a>
+        </div>
+      </div>
     </div>
-    <button class="btn" onclick="handleLogout()">Logout</button>
+  </div>
+
+  <!-- MAIN DASHBOARD -->
+  <div class="container">
+
+    <!-- COLORFUL BANNER -->
+    <div class="banner">
+      <span class="free-badge">100% FREE FOR ALL USERS</span>
+      <h2>Get Hired by US Companies in 30 Days 🚩</h2>
+      <p>Upload Resume → AI Auto-Fill → Get Matched with Top US Staffing Firms</p>
+    </div>
+
+    <!-- AI RESUME SCORE -->
+    <div class="score-box" id="scoreBox" style="display:none;">
+      <div class="score-header">
+        <div class="score-title">🤖 AI Resume Score</div>
+        <div class="score-value" id="scoreValue">0/100</div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <div id="aiSuggestions"></div>
+    </div>
+
+    <!-- STATUS TRACKER -->
+    <div class="status-box" id="statusBox" style="display:none;">
+      <div class="status-title">📊 Resume Status Updates</div>
+      <div id="statusList"></div>
+    </div>
+
+    <div class="upload" id="uploadBox" onclick="document.getElementById('resume').click()">
+      <input type="file" id="resume" accept=".pdf,.docx" style="display:none;" onchange="parseResume(event)">
+      <p style="font-size:40px; margin:0;">📄</p>
+      <p><b>Click to Upload Resume</b></p>
+      <p class="note">PDF or DOCX. AI will auto-fill below fields instantly</p>
+      <p id="fileName"></p>
+    </div>
+
+    <div class="section-title">1. Auto-Filled From Resume by AI</div>
+    <input type="text" id="name" placeholder="Full Name" class="auto-filled" readonly>
+    <input type="text" id="designation" placeholder="Job Title: e.g. Java Developer" class="auto-filled" readonly>
+    <input type="number" id="exp" placeholder="Years of Experience" class="auto-filled" readonly>
+    <input type="text" id="skills" placeholder="Skills: Java, Spring, AWS" class="auto-filled" readonly>
+
+    <div class="section-title">2. Professional Links - Auto-Filled</div>
+    <input type="url" id="linkedin" placeholder="LinkedIn URL" class="auto-filled" readonly>
+    <input type="url" id="github" placeholder="GitHub URL" class="auto-filled" readonly>
+    <input type="url" id="portfolio" placeholder="Portfolio Website URL" class="auto-filled" readonly>
+
+    <div class="section-title">3. Manual Selection Required *</div>
+
+    <label style="font-size:14px; color:#334155;">Location *</label>
+    <select id="location" class="manual">
+      <option value="">Select Location</option>
+      <option value="Remote">Remote</option>
+      <option value="Austin, TX">Austin, TX</option>
+      <option value="Dallas, TX">Dallas, TX</option>
+      <option value="Houston, TX">Houston, TX</option>
+      <option value="San Francisco, CA">San Francisco, CA</option>
+      <option value="New York, NY">New York, NY</option>
+      <option value="Chicago, IL">Chicago, IL</option>
+      <option value="Seattle, WA">Seattle, WA</option>
+      <option value="Boston, MA">Boston, MA</option>
+      <option value="Atlanta, GA">Atlanta, GA</option>
+    </select>
+
+    <label style="font-size:14px; color:#334155;">Visa Status *</label>
+    <select id="visa" class="manual">
+      <option value="">Select Visa Status</option>
+      <option value="US Citizen">US Citizen</option>
+      <option value="Green Card">Green Card</option>
+      <option value="H1B">H1B</option>
+      <option value="H4 EAD">H4 EAD</option>
+      <option value="L1">L1</option>
+      <option value="L2">L2</option>
+      <option value="OPT">OPT</option>
+      <option value="CPT">CPT</option>
+      <option value="TN">TN Visa</option>
+      <option value="Need Sponsorship">Need Sponsorship</option>
+    </select>
+
+    <label style="font-size:14px; color:#334155;">Notice Period *</label>
+    <select id="notice" class="manual">
+      <option value="">Select Notice Period</option>
+      <option value="Immediate">Immediate</option>
+      <option value="2 Weeks">2 Weeks</option>
+      <option value="30 Days">30 Days</option>
+      <option value="60 Days">60 Days</option>
+      <option value="90 Days">90 Days</option>
+    </select>
+
+    <button class="btn" onclick="saveProfile()">✅ Save & Make Profile Live on RECRUZEN-USA</button>
+    <p class="note">Your profile will be visible to US Staffing Companies</p>
   </div>
 </div>
 
 <script>
+let statusUpdates = [];
+
 // PASSWORD EYE TOGGLE
 function togglePassword(){
   let passInput = document.getElementById('loginPassword');
   let eyeBtn = document.querySelector('.eye-btn');
-  
+
   if(passInput.type === "password"){
     passInput.type = "text";
-    eyeBtn.innerText = "🙈"; // hide icon
+    eyeBtn.innerText = "🙈";
   } else {
     passInput.type = "password";
-    eyeBtn.innerText = "👁️"; // show icon
+    eyeBtn.innerText = "👁️";
   }
 }
 
@@ -110,6 +264,95 @@ window.onload = function(){
     document.getElementById('loginPage').classList.add('hidden');
     document.getElementById('dashboardPage').classList.remove('hidden');
   }
+}
+
+function toggleDropdown(){
+  document.getElementById('profileMenu').classList.toggle('hidden');
+}
+window.onclick = function(e){
+  if(!e.target.closest('.profile')){
+    document.getElementById('profileMenu').classList.add('hidden');
+  }
+}
+function showNotifications(){
+  alert("🔔 Notifications:\n1. 2 Recruiters viewed your profile\n2. 1 New job match found\n3. Profile 80% complete");
+}
+
+function addStatus(icon, text, time){
+  statusUpdates.unshift({icon, text, time});
+  document.getElementById('statusBox').style.display = 'block';
+  document.getElementById('statusList').innerHTML = statusUpdates.map(s => `
+    <div class="status-item">
+      <div class="status-icon active">${s.icon}</div>
+      <div class="status-text">${s.text}</div>
+      <div class="status-time">${s.time}</div>
+    </div>
+  `).join('');
+}
+
+function calculateScore(){
+  let score = 0;
+  let suggestions = [];
+
+  if(document.getElementById('name').value) score += 10;
+  if(document.getElementById('designation').value) score += 10;
+  if(document.getElementById('exp').value) score += 10;
+  if(document.getElementById('skills').value.split(',').length > 5) score += 15; else suggestions.push("<b>Add Skills:</b> Add 3+ more technical skills to increase visibility");
+  if(document.getElementById('linkedin').value) score += 10;
+  if(document.getElementById('github').value) score += 10;
+  if(document.getElementById('portfolio').value) score += 10;
+  if(document.getElementById('location').value) score += 10;
+  if(document.getElementById('visa').value) score += 10;
+  if(document.getElementById('notice').value) score += 5;
+
+  if(!document.getElementById('portfolio').value) suggestions.push("<b>Add Portfolio:</b> Portfolio link unte recruiters 40% ekkuva contact chestaru");
+
+  document.getElementById('scoreBox').style.display = 'block';
+  document.getElementById('scoreValue').innerText = score + "/100";
+  document.getElementById('progressFill').style.width = score + "%";
+  document.getElementById('aiSuggestions').innerHTML = suggestions.map(s => `<div class="ai-tip">${s}</div>`).join('');
+}
+
+function parseResume(e){
+  let file = e.target.files[0];
+  if(!file) return;
+
+  document.getElementById('fileName').innerText = "✅ Uploaded: " + file.name;
+  document.getElementById('uploadBox').classList.add('uploaded');
+  addStatus('📤', '<b>Resume Submitted</b> - ' + file.name, 'Just now');
+
+  alert("🤖 AI is parsing your resume... Auto-filling in 2 seconds");
+
+  setTimeout(()=>{
+    addStatus('🤖', '<b>AI Parsed Successfully</b> - Extracted Name, Skills, Experience', '1 min ago');
+
+    document.getElementById('name').value = "GANESH RAM MAKINA";
+    document.getElementById('designation').value = "IT Support Specialist & Senior Talent Acquisition";
+    document.getElementById('exp').value = "9";
+    document.getElementById('skills').value = "Java, J2EE, Spring Boot, WebSphere, Kibana, Grafana, ATS, Recruitment, Technical Support";
+    document.getElementById('linkedin').value = "https://linkedin.com/in/ganeshmakina";
+    document.getElementById('github').value = "https://github.com/ram1025";
+    document.getElementById('portfolio').value = "https://ganeshmakina.dev";
+
+    calculateScore();
+    alert("✅ Auto-fill Complete! \n\nAI Score: 85/100. Check suggestions below.");
+  }, 1500);
+}
+
+function saveProfile(){
+  let location = document.getElementById('location').value;
+  let visa = document.getElementById('visa').value;
+  let notice = document.getElementById('notice').value;
+
+  if(location === "" || visa === "" || notice === ""){
+    alert("❌ Please select Location, Visa Status and Notice Period");
+    return;
+  }
+
+  addStatus('✅', '<b>Profile Live on RECRUZEN-USA</b> - Visible to 500+ US Recruiters', 'Just now');
+  calculateScore();
+
+  alert("✅ Profile Live! \n\nUS Recruiters can now find you on RECRUZEN-USA");
 }
 </script>
 
