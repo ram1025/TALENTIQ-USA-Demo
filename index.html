@@ -9,6 +9,16 @@
 body {background:#f8fafc;}
 .hidden {display:none!important;}
 
+/* LOGIN PAGE */
+.login-container {min-height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #16a34a 0%, #0B3D91 100%);}
+.login-box {background:white; padding:40px; border-radius:16px; width:90%; max-width:400px; box-shadow:0 20px 50px rgba(0,0,0,0.2);}
+.login-logo {text-align:center; font-size:28px; font-weight:800; background: linear-gradient(90deg, #16a34a, #0B3D91); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom:10px;}
+.login-subtitle {text-align:center; color:#64748b; margin-bottom:25px; font-size:14px;}
+.login-input {width:100%; padding:14px; margin:10px 0; border:1px solid #cbd5e1; border-radius:8px; font-size:15px;}
+.login-btn {width:100%; padding:14px; background:linear-gradient(90deg, #16a34a, #0B3D91); color:white; border:none; border-radius:8px; font-weight:700; font-size:16px; cursor:pointer; margin-top:10px;}
+.login-btn:hover {opacity:0.9;}
+.demo-info {background:#f0fdf4; border:1px solid #16a34a; padding:12px; border-radius:8px; margin-top:15px; font-size:13px; color:#15803d; text-align:center;}
+
 /* TOPBAR */
 .topbar {background:white; padding:12px 24px; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:100;}
 .logo {font-size:20px; font-weight:800; background: linear-gradient(90deg, #16a34a, #0B3D91); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
@@ -71,102 +81,169 @@ input, select {width:100%; padding:12px; margin:8px 0; border:1px solid #cbd5e1;
 </head>
 <body>
 
-<!-- TOPBAR -->
-<div class="topbar">
-  <div class="logo">TALENTIQ-USA 🚀</div>
-  <div class="top-right">
-    <div class="notif" onclick="showNotifications()">🔔<span class="notif-badge">3</span></div>
-    <div class="profile" onclick="toggleDropdown()">
-      <div class="avatar">RM</div> Ram Makina ▼
-      <div id="profileMenu" class="dropdown hidden">
-        <div class="user-info">
-          <b>Ram Makina</b>
-          <span style="font-size:12px; color:#64748b;">ram.makina@email.com</span>
-        </div>
-        <a href="#">👤 My Profile</a>
-        <a href="#">⚙️ Account Settings</a>
-        <a href="#" onclick="logout()">🚪 Logout</a>
-      </div>
+<!-- LOGIN PAGE -->
+<div id="loginPage" class="login-container">
+  <div class="login-box">
+    <div class="login-logo">TALENTIQ-USA 🚀</div>
+    <p class="login-subtitle">AI Resume Builder for US Jobs</p>
+
+    <input type="email" id="loginEmail" placeholder="Email" class="login-input" value="demo@talentiq.com">
+    <input type="password" id="loginPassword" placeholder="Password" class="login-input" value="demo123">
+
+    <button class="login-btn" onclick="handleLogin()">Login</button>
+
+    <div class="demo-info">
+      <b>Demo Login:</b><br>
+      Email: demo@talentiq.com<br>
+      Password: demo123
     </div>
   </div>
 </div>
 
-<!-- MAIN DASHBOARD -->
-<div class="container">
-
-  <!-- COLORFUL BANNER -->
-  <div class="banner">
-    <span class="free-badge">100% FREE FOR ALL USERS</span>
-    <h2>Get Hired by US Companies in 30 Days 🚩</h2>
-    <p>Upload Resume → AI Auto-Fill → Get Matched with Top US Staffing Firms</p>
-  </div>
-
-  <!-- NEW AI RESUME SCORE -->
-  <div class="score-box" id="scoreBox" style="display:none;">
-    <div class="score-header">
-      <div class="score-title">🤖 AI Resume Score</div>
-      <div class="score-value" id="scoreValue">0/100</div>
+<!-- DASHBOARD PAGE -->
+<div id="dashboardPage" class="hidden">
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="logo">TALENTIQ-USA 🚀</div>
+    <div class="top-right">
+      <div class="notif" onclick="showNotifications()">🔔<span class="notif-badge">3</span></div>
+      <div class="profile" onclick="toggleDropdown()">
+        <div class="avatar">DM</div> Demo User ▼
+        <div id="profileMenu" class="dropdown hidden">
+          <div class="user-info">
+            <b>Demo User</b>
+            <span style="font-size:12px; color:#64748b;">demo@talentiq.com</span>
+          </div>
+          <a href="#">👤 My Profile</a>
+          <a href="#">⚙️ Account Settings</a>
+          <a href="#" onclick="handleLogout()">🚪 Logout</a>
+        </div>
+      </div>
     </div>
-    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-    <div id="aiSuggestions"></div>
   </div>
 
-  <!-- STATUS TRACKER -->
-  <div class="status-box" id="statusBox" style="display:none;">
-    <div class="status-title">📊 Resume Status Updates</div>
-    <div id="statusList"></div>
+  <!-- MAIN DASHBOARD -->
+  <div class="container">
+
+    <!-- COLORFUL BANNER -->
+    <div class="banner">
+      <span class="free-badge">100% FREE FOR ALL USERS</span>
+      <h2>Get Hired by US Companies in 30 Days 🚩</h2>
+      <p>Upload Resume → AI Auto-Fill → Get Matched with Top US Staffing Firms</p>
+    </div>
+
+    <!-- AI RESUME SCORE -->
+    <div class="score-box" id="scoreBox" style="display:none;">
+      <div class="score-header">
+        <div class="score-title">🤖 AI Resume Score</div>
+        <div class="score-value" id="scoreValue">0/100</div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <div id="aiSuggestions"></div>
+    </div>
+
+    <!-- STATUS TRACKER -->
+    <div class="status-box" id="statusBox" style="display:none;">
+      <div class="status-title">📊 Resume Status Updates</div>
+      <div id="statusList"></div>
+    </div>
+
+    <div class="upload" id="uploadBox" onclick="document.getElementById('resume').click()">
+      <input type="file" id="resume" accept=".pdf,.docx" style="display:none;" onchange="parseResume(event)">
+      <p style="font-size:40px; margin:0;">📄</p>
+      <p><b>Click to Upload Resume</b></p>
+      <p class="note">PDF or DOCX. AI will auto-fill below fields instantly</p>
+      <p id="fileName"></p>
+    </div>
+
+    <div class="section-title">1. Auto-Filled From Resume by AI</div>
+    <input type="text" id="name" placeholder="Full Name" class="auto-filled" readonly>
+    <input type="text" id="designation" placeholder="Job Title: e.g. Java Developer" class="auto-filled" readonly>
+    <input type="number" id="exp" placeholder="Years of Experience" class="auto-filled" readonly>
+    <input type="text" id="skills" placeholder="Skills: Java, Spring, AWS" class="auto-filled" readonly>
+
+    <div class="section-title">2. Professional Links - Auto-Filled</div>
+    <input type="url" id="linkedin" placeholder="LinkedIn URL" class="auto-filled" readonly>
+    <input type="url" id="github" placeholder="GitHub URL" class="auto-filled" readonly>
+    <input type="url" id="portfolio" placeholder="Portfolio Website URL" class="auto-filled" readonly>
+
+    <div class="section-title">3. Manual Selection Required *</div>
+
+    <label style="font-size:14px; color:#334155;">Location *</label>
+    <select id="location" class="manual">
+      <option value="">Select Location</option>
+      <option value="Remote">Remote</option>
+      <option value="Austin, TX">Austin, TX</option>
+      <option value="Dallas, TX">Dallas, TX</option>
+      <option value="Houston, TX">Houston, TX</option>
+      <option value="San Francisco, CA">San Francisco, CA</option>
+      <option value="New York, NY">New York, NY</option>
+      <option value="Chicago, IL">Chicago, IL</option>
+      <option value="Seattle, WA">Seattle, WA</option>
+      <option value="Boston, MA">Boston, MA</option>
+      <option value="Atlanta, GA">Atlanta, GA</option>
+    </select>
+
+    <label style="font-size:14px; color:#334155;">Visa Status *</label>
+    <select id="visa" class="manual">
+      <option value="">Select Visa Status</option>
+      <option value="US Citizen">US Citizen</option>
+      <option value="Green Card">Green Card</option>
+      <option value="H1B">H1B</option>
+      <option value="H4 EAD">H4 EAD</option>
+      <option value="L1">L1</option>
+      <option value="L2">L2</option>
+      <option value="OPT">OPT</option>
+      <option value="CPT">CPT</option>
+      <option value="TN">TN Visa</option>
+      <option value="Need Sponsorship">Need Sponsorship</option>
+    </select>
+
+    <label style="font-size:14px; color:#334155;">Notice Period *</label>
+    <select id="notice" class="manual">
+      <option value="">Select Notice Period</option>
+      <option value="Immediate">Immediate</option>
+      <option value="2 Weeks">2 Weeks</option>
+      <option value="30 Days">30 Days</option>
+      <option value="60 Days">60 Days</option>
+      <option value="90 Days">90 Days</option>
+    </select>
+
+    <button class="btn" onclick="saveProfile()">✅ Save & Make Profile Live on RECRUZEN-USA</button>
+    <p class="note">Your profile will be visible to US Staffing Companies</p>
   </div>
-
-  <div class="upload" id="uploadBox" onclick="document.getElementById('resume').click()">
-    <input type="file" id="resume" accept=".pdf,.docx" style="display:none;" onchange="parseResume(event)">
-    <p style="font-size:40px; margin:0;">📄</p>
-    <p><b>Click to Upload Resume</b></p>
-    <p class="note">PDF or DOCX. AI will auto-fill below fields instantly</p>
-    <p id="fileName"></p>
-  </div>
-
-  <div class="section-title">1. Auto-Filled From Resume by AI</div>
-  <input type="text" id="name" placeholder="Full Name" class="auto-filled" readonly>
-  <input type="text" id="designation" placeholder="Job Title: e.g. Java Developer" class="auto-filled" readonly>
-  <input type="number" id="exp" placeholder="Years of Experience" class="auto-filled" readonly>
-  <input type="text" id="skills" placeholder="Skills: Java, Spring, AWS" class="auto-filled" readonly>
-
-  <div class="section-title">2. Professional Links - Auto-Filled</div>
-  <input type="url" id="linkedin" placeholder="LinkedIn URL" class="auto-filled" readonly>
-  <input type="url" id="github" placeholder="GitHub URL" class="auto-filled" readonly>
-  <input type="url" id="portfolio" placeholder="Portfolio Website URL" class="auto-filled" readonly>
-
-  <div class="section-title">3. Manual Selection Required *</div>
-
-  <label style="font-size:14px; color:#334155;">Location *</label>
-  <select id="location" class="manual">
-    <option value="">Select Location</option>
-    <option value="Remote">Remote</option>
-    <option value="Austin, TX">Austin, TX</option>
-    <option value="Dallas, TX">Dallas, TX</option>
-  </select>
-
-  <label style="font-size:14px; color:#334155;">Visa Status *</label>
-  <select id="visa" class="manual">
-    <option value="">Select Visa Status</option>
-    <option value="US Citizen">US Citizen</option>
-    <option value="H1B">H1B</option>
-    <option value="OPT">OPT/CPT</option>
-  </select>
-
-  <label style="font-size:14px; color:#334155;">Notice Period *</label>
-  <select id="notice" class="manual">
-    <option value="">Select Notice Period</option>
-    <option value="Immediate">Immediate</option>
-    <option value="30 Days">30 Days</option>
-  </select>
-
-  <button class="btn" onclick="saveProfile()">✅ Save & Make Profile Live on RECRUZEN-USA</button>
-  <p class="note">Your profile will be visible to US Staffing Companies</p>
 </div>
 
 <script>
 let statusUpdates = [];
+
+// LOGIN LOGIC
+function handleLogin(){
+  let email = document.getElementById('loginEmail').value;
+  let pass = document.getElementById('loginPassword').value;
+
+  if(email === "demo@talentiq.com" && pass === "demo123"){
+    document.getElementById('loginPage').classList.add('hidden');
+    document.getElementById('dashboardPage').classList.remove('hidden');
+    localStorage.setItem("talentiqLoggedIn", "true");
+  } else {
+    alert("❌ Invalid credentials. Use Demo: demo@talentiq.com / demo123");
+  }
+}
+
+function handleLogout(){
+  localStorage.removeItem("talentiqLoggedIn");
+  document.getElementById('dashboardPage').classList.add('hidden');
+  document.getElementById('loginPage').classList.remove('hidden');
+}
+
+// Check if already logged in
+window.onload = function(){
+  if(localStorage.getItem("talentiqLoggedIn") === "true"){
+    document.getElementById('loginPage').classList.add('hidden');
+    document.getElementById('dashboardPage').classList.remove('hidden');
+  }
+}
 
 function toggleDropdown(){
   document.getElementById('profileMenu').classList.toggle('hidden');
@@ -175,9 +252,6 @@ window.onclick = function(e){
   if(!e.target.closest('.profile')){
     document.getElementById('profileMenu').classList.add('hidden');
   }
-}
-function logout(){
-  alert("Logged out successfully");
 }
 function showNotifications(){
   alert("🔔 Notifications:\n1. 2 Recruiters viewed your profile\n2. 1 New job match found\n3. Profile 80% complete");
@@ -211,12 +285,10 @@ function calculateScore(){
   if(document.getElementById('notice').value) score += 5;
 
   if(!document.getElementById('portfolio').value) suggestions.push("<b>Add Portfolio:</b> Portfolio link unte recruiters 40% ekkuva contact chestaru");
-  if(document.getElementById('skills').value.split(',').length < 8) suggestions.push("<b>Keyword Optimization:</b> Job description lo unna keywords skills lo add cheyyandi");
 
   document.getElementById('scoreBox').style.display = 'block';
   document.getElementById('scoreValue').innerText = score + "/100";
   document.getElementById('progressFill').style.width = score + "%";
-
   document.getElementById('aiSuggestions').innerHTML = suggestions.map(s => `<div class="ai-tip">${s}</div>`).join('');
 }
 
@@ -241,7 +313,7 @@ function parseResume(e){
     document.getElementById('github').value = "https://github.com/ram1025";
     document.getElementById('portfolio').value = "https://ganeshmakina.dev";
 
-    calculateScore(); // Score update
+    calculateScore();
     alert("✅ Auto-fill Complete! \n\nAI Score: 85/100. Check suggestions below.");
   }, 1500);
 }
@@ -257,24 +329,9 @@ function saveProfile(){
   }
 
   addStatus('✅', '<b>Profile Live on RECRUZEN-USA</b> - Visible to 500+ US Recruiters', 'Just now');
-  calculateScore(); // Final score
+  calculateScore();
 
-  let profile = {
-    name: document.getElementById('name').value,
-    designation: document.getElementById('designation').value,
-    exp: document.getElementById('exp').value,
-    location: location,
-    skills: document.getElementById('skills').value,
-    linkedin: document.getElementById('linkedin').value,
-    github: document.getElementById('github').value,
-    portfolio: document.getElementById('portfolio').value,
-    visa: visa,
-    notice: notice
-  };
-
-  localStorage.setItem("talentiqProfile", JSON.stringify(profile));
   alert("✅ Profile Live! \n\nUS Recruiters can now find you on RECRUZEN-USA");
-  console.log(profile);
 }
 </script>
 
